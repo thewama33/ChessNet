@@ -12,3 +12,4 @@
 /Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/obj/Debug/net8.0/ChessNet.pdb
 /Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/obj/Debug/net8.0/ChessNet.genruntimeconfig.cache
 /Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/obj/Debug/net8.0/ref/ChessNet.dll
+/Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/obj/Debug/net8.0/ChessNet.sourcelink.json

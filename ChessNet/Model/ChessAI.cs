@@ -12,7 +12,9 @@ namespace ChessNet.Model
             List<string> moves = GetAllPossibleMoves(board);
             if (moves.Count == 0) return null; // No moves available
 
-            // Prioritize capturing moves
+            string bestMove = moves[0];
+            int highestScore = int.MinValue;
+
             foreach (string move in moves)
             {
                 int fromRow = 8 - (move[1] - '0');
@@ -20,15 +22,18 @@ namespace ChessNet.Model
                 int toRow = 8 - (move[3] - '0');
                 int toCol = move[2] - 'a';
 
-                if (board.IsCaptureMove(fromRow, fromCol, toRow, toCol))
+                int score = EvaluateMove(board, fromRow, fromCol, toRow, toCol);
+
+                if (score > highestScore)
                 {
-                    return move; // Pick the capturing move
+                    highestScore = score;
+                    bestMove = move;
                 }
             }
 
-            // If no captures, pick a random move
-            return moves[random.Next(moves.Count)];
+            return bestMove;
         }
+
 
         /// <summary>
         /// Generates a list of all possible LEGAL moves for the AI player.
@@ -44,17 +49,29 @@ namespace ChessNet.Model
                 {
                     char piece = currentBoard[fromRow, fromCol];
 
-                    // AI plays as black (lowercase pieces)
-                    if (char.IsLower(piece) == !board.IsWhiteTurn)
+                    if (char.IsLower(piece) == !board.IsWhiteTurn) // AI plays as black
                     {
                         for (int toRow = 0; toRow < 8; toRow++)
                         {
                             for (int toCol = 0; toCol < 8; toCol++)
                             {
-                                if (board.IsMoveLegal(fromRow, fromCol, toRow, toCol)) // ✅ Corrected!
+                                if (board.IsMoveLegal(fromRow, fromCol, toRow, toCol))
                                 {
-                                    string move = $"{(char)('a' + fromCol)}{(8 - fromRow)}{(char)('a' + toCol)}{(8 - toRow)}";
-                                    possibleMoves.Add(move);
+                                    // Simulate the move
+                                    char temp = currentBoard[toRow, toCol];
+                                    currentBoard[toRow, toCol] = currentBoard[fromRow, fromCol];
+                                    currentBoard[fromRow, fromCol] = '.';
+
+                                    // Ensure AI does not move into check
+                                    if (!board.IsKingInCheck(false, currentBoard))
+                                    {
+                                        string move = $"{(char)('a' + fromCol)}{(8 - fromRow)}{(char)('a' + toCol)}{(8 - toRow)}";
+                                        possibleMoves.Add(move);
+                                    }
+
+                                    // Undo the simulated move
+                                    currentBoard[fromRow, fromCol] = currentBoard[toRow, toCol];
+                                    currentBoard[toRow, toCol] = temp;
                                 }
                             }
                         }
@@ -63,6 +80,7 @@ namespace ChessNet.Model
             }
             return possibleMoves;
         }
+
 
         /// <summary>
         /// Provides a hint move for the player.
@@ -89,5 +107,34 @@ namespace ChessNet.Model
             // Otherwise, suggest any legal move
             return $"Hint: Consider {legalMoves[random.Next(legalMoves.Count)]}";
         }
+
+
+        private int EvaluateMove(ChessBoard board, int fromRow, int fromCol, int toRow, int toCol)
+        {
+            char[,] boardState = board.GetBoard();
+            char targetPiece = boardState[toRow, toCol];
+
+            // Piece value system
+            Dictionary<char, int> pieceValues = new Dictionary<char, int>
+    {
+        { 'p', 1 }, { 'n', 3 }, { 'b', 3 }, { 'r', 5 }, { 'q', 9 }, { 'k', 100 },
+        { 'P', 1 }, { 'N', 3 }, { 'B', 3 }, { 'R', 5 }, { 'Q', 9 }, { 'K', 100 }
+    };
+
+            int score = 0;
+
+            // If capturing an enemy piece, add its value to score
+            if (targetPiece != '.' && (char.IsUpper(targetPiece) != char.IsUpper(boardState[fromRow, fromCol])))
+            {
+                score += pieceValues[targetPiece];
+            }
+
+            // Bonus for moving toward the center (encourages better positioning)
+            int centerBonus = (3 - Math.Abs(3 - toRow)) + (3 - Math.Abs(3 - toCol));
+            score += centerBonus;
+
+            return score;
+        }
+
     }
 }

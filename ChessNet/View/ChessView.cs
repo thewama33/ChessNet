@@ -20,10 +20,13 @@ namespace ChessNet.View
             Console.WriteLine("\nType 'hint' anytime for a suggested move!");
         }
 
-        public void DisplayBoard(ChessBoard board)
+        public void DisplayBoard(ChessBoard board, string lastMove = "")
         {
             char[,] currentBoard = board.GetBoard();
-            Console.Clear();
+
+            // Move cursor to top-left without clearing
+            Console.SetCursorPosition(0, 0);
+
             Console.WriteLine("    a   b   c   d   e   f   g   h  ");
             Console.WriteLine("  +---+---+---+---+---+---+---+---+");
 
@@ -36,8 +39,14 @@ namespace ChessNet.View
                 Console.WriteLine("  +---+---+---+---+---+---+---+---+");
             }
 
-            Console.WriteLine("    a   b   c   d   e   f   g   h  \n");
+            Console.WriteLine("    a   b   c   d   e   f   g   h  ");
+
+            if (!string.IsNullOrEmpty(lastMove))
+            {
+                Console.WriteLine($"Last Move: {lastMove}");
+            }
         }
+
 
         public void ShowMessage(string message)
         {
