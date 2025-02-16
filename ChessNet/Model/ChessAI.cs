@@ -1,69 +1,93 @@
-
 namespace ChessNet.Model
 {
     public class ChessAI
     {
-        /// <summary>
-        /// Random number generator for selecting moves.
-        /// </summary>
         private Random random = new Random();
 
         /// <summary>
-        /// Selects a random move from the list of all possible moves.
+        /// Gets the best move for the AI by prioritizing captures.
         /// </summary>
-        /// <param name="board">The current state of the chessboard.</param>
-        /// <returns>A random move in standard chess notation (e.g., "e2e4"), or null if no moves are available.</returns>
-        public string? GetRandomMove(ChessBoard board)
+        public string? GetBestMove(ChessBoard board)
         {
-            //? Get all possible moves for the AI player
-            var moves = GetAllPossibleMoves(board);
+            List<string> moves = GetAllPossibleMoves(board);
+            if (moves.Count == 0) return null; // No moves available
 
-            // Return null if no moves are available
-            if (moves.Count == 0) return null;
+            // Prioritize capturing moves
+            foreach (string move in moves)
+            {
+                int fromRow = 8 - (move[1] - '0');
+                int fromCol = move[0] - 'a';
+                int toRow = 8 - (move[3] - '0');
+                int toCol = move[2] - 'a';
 
-            // Select and return a random move from the list
+                if (board.IsCaptureMove(fromRow, fromCol, toRow, toCol))
+                {
+                    return move; // Pick the capturing move
+                }
+            }
+
+            // If no captures, pick a random move
             return moves[random.Next(moves.Count)];
         }
 
         /// <summary>
-        /// Generates a list of all possible moves for the AI player based on the current state of the chessboard.
+        /// Generates a list of all possible LEGAL moves for the AI player.
         /// </summary>
-        /// <param name="board">The current state of the chessboard.</param>
-        /// <returns>A list of strings representing all possible moves the AI player can make. Each move is represented in standard chess notation (e.g., "e2e4").</returns>
         private List<string> GetAllPossibleMoves(ChessBoard board)
         {
             List<string> possibleMoves = new List<string>();
             char[,] currentBoard = board.GetBoard();
 
-            // Iterate over all squares on the board
             for (int fromRow = 0; fromRow < 8; fromRow++)
             {
                 for (int fromCol = 0; fromCol < 8; fromCol++)
                 {
-                    // Get the piece on the current square
                     char piece = currentBoard[fromRow, fromCol];
 
-                    // If the piece belongs to the AI player, generate all possible moves
-                    if (char.IsLower(piece) == !board.IsWhiteTurn) // AI plays black
+                    // AI plays as black (lowercase pieces)
+                    if (char.IsLower(piece) == !board.IsWhiteTurn)
                     {
-                        // Iterate over all squares on the board again
                         for (int toRow = 0; toRow < 8; toRow++)
                         {
                             for (int toCol = 0; toCol < 8; toCol++)
                             {
-                                // Create the move string in standard chess notation
-                                string move = $"{(char)('a' + fromCol)}{(8 - fromRow)}{(char)('a' + toCol)}{(8 - toRow)}";
-
-                                // Add the move to the list of possible moves
-                                possibleMoves.Add(move);
+                                if (board.IsMoveLegal(fromRow, fromCol, toRow, toCol)) // ✅ Corrected!
+                                {
+                                    string move = $"{(char)('a' + fromCol)}{(8 - fromRow)}{(char)('a' + toCol)}{(8 - toRow)}";
+                                    possibleMoves.Add(move);
+                                }
                             }
                         }
                     }
                 }
             }
-
-            // Return the list of all possible moves
             return possibleMoves;
+        }
+
+        /// <summary>
+        /// Provides a hint move for the player.
+        /// </summary>
+        public string GetHintMove(ChessBoard board)
+        {
+            List<string> legalMoves = board.GetLegalMoves();
+            if (legalMoves.Count == 0) return "No available moves!";
+
+            // Try to find a capturing move first
+            foreach (string move in legalMoves)
+            {
+                int fromRow = 8 - (move[1] - '0');
+                int fromCol = move[0] - 'a';
+                int toRow = 8 - (move[3] - '0');
+                int toCol = move[2] - 'a';
+
+                if (board.IsCaptureMove(fromRow, fromCol, toRow, toCol))
+                {
+                    return $"Hint: Try capturing with {move}";
+                }
+            }
+
+            // Otherwise, suggest any legal move
+            return $"Hint: Consider {legalMoves[random.Next(legalMoves.Count)]}";
         }
     }
 }

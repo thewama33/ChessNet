@@ -17,6 +17,7 @@ namespace ChessNet.View
             Console.WriteLine("1 - Play with a Friend");
             Console.WriteLine("2 - Play against the Computer");
             Console.Write("Choose an option: ");
+            Console.WriteLine("\nType 'hint' anytime for a suggested move!");
         }
 
         public void DisplayBoard(ChessBoard board)
@@ -30,7 +31,7 @@ namespace ChessNet.View
             {
                 Console.Write((8 - i) + " | ");
                 for (int j = 0; j < 8; j++)
-                    Console.Write(currentBoard[i, j] + " | ");
+                    Console.Write(TranslatePiece(currentBoard[i, j]) + " | ");
                 Console.WriteLine(8 - i);
                 Console.WriteLine("  +---+---+---+---+---+---+---+---+");
             }
@@ -41,6 +42,27 @@ namespace ChessNet.View
         public void ShowMessage(string message)
         {
             Console.WriteLine(message);
+        }
+
+        static char TranslatePiece(char piece)
+        {
+            // Unicode Chess Pieces (Optional)
+            switch (piece)
+            {
+                case 'P': return '♙';
+                case 'p': return '♟';
+                case 'R': return '♖';
+                case 'r': return '♜';
+                case 'N': return '♘';
+                case 'n': return '♞';
+                case 'B': return '♗';
+                case 'b': return '♝';
+                case 'Q': return '♕';
+                case 'q': return '♛';
+                case 'K': return '♔';
+                case 'k': return '♚';
+                default: return ' '; // Empty square
+            }
         }
     }
 }
