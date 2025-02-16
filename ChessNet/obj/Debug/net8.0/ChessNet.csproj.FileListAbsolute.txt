@@ -1,0 +1,14 @@
+/Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/bin/Debug/net8.0/ChessNet
+/Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/bin/Debug/net8.0/ChessNet.deps.json
+/Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/bin/Debug/net8.0/ChessNet.runtimeconfig.json
+/Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/bin/Debug/net8.0/ChessNet.dll
+/Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/bin/Debug/net8.0/ChessNet.pdb
+/Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/obj/Debug/net8.0/ChessNet.GeneratedMSBuildEditorConfig.editorconfig
+/Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/obj/Debug/net8.0/ChessNet.AssemblyInfoInputs.cache
+/Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/obj/Debug/net8.0/ChessNet.AssemblyInfo.cs
+/Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/obj/Debug/net8.0/ChessNet.csproj.CoreCompileInputs.cache
+/Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/obj/Debug/net8.0/ChessNet.dll
+/Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/obj/Debug/net8.0/refint/ChessNet.dll
+/Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/obj/Debug/net8.0/ChessNet.pdb
+/Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/obj/Debug/net8.0/ChessNet.genruntimeconfig.cache
+/Users/omar/Desktop/DotNet Projects/ChessNet/ChessNet/obj/Debug/net8.0/ref/ChessNet.dll
