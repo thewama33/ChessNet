@@ -1,0 +1,109 @@
+# Ignore Visual Studio-specific files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore build output
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+*.appx
+*.appxbundle
+*.msix
+*.msixbundle
+
+# Ignore dependencies
+packages/
+*.nupkg
+project.lock.json
+project.assets.json
+PackageRestoreLogs/
+
+# Ignore logs and temporary files
+*.log
+*.tlog
+*.cache
+*.tmp
+
+# Ignore user-specific settings
+*.csproj.user
+*.sln.ide
+*.sln.iml
+*.swp
+*.vscode/
+
+# Ignore Resharper and Rider files
+.idea/
+*.DotSettings.user
+_ReSharper*/
+
+# Ignore NuGet packages
+*.nupkg
+.nuget/
+packages/
+project.lock.json
+
+# Ignore secrets and environment settings
+appsettings.json
+appsettings.Development.json
+secrets.json
+
+# Ignore Entity Framework migrations
+Migrations/
+
+# Ignore compiled Python files (for scripting support)
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Ignore database files
+*.mdf
+*.ldf
+
+# Ignore Unity-generated files (if used)
+Library/
+Temp/
+Logs/
+MemoryCaptures/
+*.pidb
+*.sln.metaproj
+*.unityproj
+
+# Ignore JetBrains Rider files
+.idea/
+*.sln.DotSettings
+
+# Ignore Rider & Resharper files
+*.sln.iml
+_ReSharper.Caches/
+
+# Ignore Docker-related files
+docker-compose.override.yml
+.env
+
+# Ignore Test Results
+TestResults/
+.coverage
+*.coverage
+*.coveragexml
+
+# Ignore Node.js dependencies (if using frontend in C# project)
+node_modules/
+npm-debug.log
+yarn.lock
+
+# Ignore macOS files
+.DS_Store
+
+# Ignore Windows-specific system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Ignore Linux files
+*.swp

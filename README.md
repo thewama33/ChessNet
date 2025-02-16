@@ -68,6 +68,7 @@ If using **Visual Studio**:
 ---
 
 ## 🔧 **Planned Improvements**
+🔹 **Hint Move**  
 🔹 **Checkmate & Stalemate detection**  
 🔹 **Castling & En Passant moves**  
 🔹 **Better AI with Minimax Algorithm**  
